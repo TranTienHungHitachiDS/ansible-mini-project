@@ -1,0 +1,9 @@
+- name: Import data to database
+  hosts: dbservers
+  vars_files:
+    - "../group_vars/db_secrets.yaml"
+  tasks:
+    - name: Import data to MySQL db
+      mysql_import:
+        user: "{{ mysql_user }}"
+        password: "{{ mysql_password }}"

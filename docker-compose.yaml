@@ -1,0 +1,21 @@
+services:
+  mysql-db:
+    container_name: mysql-db
+    image: "mysql:8.4.6"
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: Kobiet.123
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: user_testdb
+      MYSQL_PASSWORD: Kobiet.123
+    volumes:
+      - mysql_db_data:/var/lib/mysql
+    networks:
+      - intern_project_network
+    
+volumes:
+  mysql_db_data:
+
+networks:
+  intern_project_network:

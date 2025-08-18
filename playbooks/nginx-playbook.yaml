@@ -1,0 +1,19 @@
+- name: Import data to database
+  hosts: webservers
+  tasks:
+    - name: Install Nginx
+      ansible.builtin.dnf:
+        update_cache: yes
+        name: nginx
+        state: present
+      become: true
+      when: ansible_distribution in ["AlmaLinux"]
+    
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      become: yes
+
+    

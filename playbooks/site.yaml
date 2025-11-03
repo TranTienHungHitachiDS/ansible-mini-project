@@ -3,7 +3,7 @@
   vars_files:
     - "../group_vars/db_secrets.yaml"
   tasks:
-    - name: Ensure python3 and pip are installed
+    - name: ensure python3 and pip are installed
       ansible.builtin.dnf:
         update_cache: yes
         name:
@@ -13,18 +13,15 @@
       become: true
       when: ansible_distribution in ["AlmaLinux"]
     
-    - name: Install mysql-connector-python module
+    - name: install mysql-connector-python module
       command: pip3 install mysql-connector-python    
     
-    - name: Import data to MySQL db
+    - name: import data to MySQL db
       mysql_import:
         user: "{{ mysql_user }}"
         password: "{{ mysql_password }}"
-    
-    - name: Copy test.txt file to server
-      ansible.builtin.copy:
-        src: test.txt
-        dest: "/home/{{ ansible_user }}/test.txt"
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-        mode: '0700'
+        host: "localhost"
+      notify: notify import DB unsccessfully
+  handlers:
+    - name: notify import DB usccessfully
+      command: echo "Import data to db successfully" >> result.txt
